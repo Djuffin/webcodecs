@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seekable Video Player</title>
+</head>
+<body>
+  <template id="seekable-video-player-template">
+    <style>
+      :host {
+        display: inline-block;
+        border: 1px solid black;
+      }
+      canvas {
+        width: 100%;
+        background-color: black;
+      }
+      .controls {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+      }
+      button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+      input[type=range] {
+        flex-grow: 1;
+      }
+    </style>
+    <canvas></canvas>
+    <div class="controls">
+      <button class="play-pause">Play</button>
+      <input type="range" class="seek-bar" min="0" max="100" step="0.1" value="0">
+    </div>
+  </template>
+  <script src="seekable-video-player.js"></script>
+
+  <seekable-video-player src="../data/bbb_video_avc_frag.mp4" width="640" height="360"></seekable-video-player>
+</body>
+</html>
