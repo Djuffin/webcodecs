@@ -38,18 +38,6 @@ class SeekableVideoPlayer extends HTMLElement {
       }
     }
 
-    connectedCallback() {
-      // Set initial dimensions if not set via attributes
-      if (!this.canvas.width) {
-        this.canvas.width = 640;
-        this.video.width = 640;
-      }
-      if (!this.canvas.height) {
-        this.canvas.height = 360;
-        this.video.height = 360;
-      }
-    }
-
     setupEventListeners() {
       this.playPauseButton.addEventListener('click', this.togglePlay.bind(this));
       this.seekBar.addEventListener('input', this.seek.bind(this));

@@ -2,9 +2,13 @@ importScripts('../third_party/mp4boxjs/mp4box.all.min.js');
 
 class Demuxer {
     #file = null
+    #info = null
+    #video_tracks = []
+    #audio_tracks = []
 
     constructor() {
         this.#file = MP4Box.createFile();
+        this.#file.onReady = this.#onReady.bind(this);
     }
 
     async load(uri) {
@@ -14,7 +18,7 @@ class Demuxer {
         let mp4File = this.#file;
 
         function appendBuffers({done, value}) {
-            if(done) {
+            if (done) {
               mp4File.flush();
               return;
             }
@@ -27,6 +31,13 @@ class Demuxer {
         }
 
         return reader.read().then(appendBuffers);
+    }
+
+    #onReady(info) {
+        console.log(`info: ${info}`);
+        this.#info = info;
+        this.#video_tracks = info.tracks.filter((t) => t.video);
+        this.#audio_tracks = info.tracks.filter((t) => t.audio);
     }
 
 
