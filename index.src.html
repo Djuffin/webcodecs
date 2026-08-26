@@ -2600,7 +2600,7 @@ enum EncodedAudioChunkType {
 1. If |init|.{{EncodedAudioChunkInit/transfer}} contains more than one reference
      to the same {{ArrayBuffer}}, then throw a {{DataCloneError}} {{DOMException}}.
 2. For each |transferable| in |init|.{{EncodedAudioChunkInit/transfer}}:
-     1. If {{platform object/[[Detached]]}} internal slot is `true`,
+     1. If |transferable|'s {{platform object/[[Detached]]}} internal slot is `true`,
          then throw a {{DataCloneError}} {{DOMException}}.
 3. Let |chunk| be a new {{EncodedAudioChunk}} object, initialized as follows
     1. Assign `init.type` to {{EncodedAudioChunk/[[type]]}}.
@@ -2706,7 +2706,7 @@ enum EncodedVideoChunkType {
 1. If |init|.{{EncodedVideoChunkInit/transfer}} contains more than one reference
      to the same {{ArrayBuffer}}, then throw a {{DataCloneError}} {{DOMException}}.
 2. For each |transferable| in |init|.{{EncodedVideoChunkInit/transfer}}:
-     1. If {{platform object/[[Detached]]}} internal slot is `true`,
+     1. If |transferable|'s {{platform object/[[Detached]]}} internal slot is `true`,
          then throw a {{DataCloneError}} {{DOMException}}.
 3. Let |chunk| be a new {{EncodedVideoChunk}} object, initialized as follows
     1. Assign `init.type` to {{EncodedVideoChunk/[[type]]}}.
@@ -2897,7 +2897,7 @@ dictionary AudioDataInit {
 2. If |init|.{{AudioDataInit/transfer}} contains more than one reference
      to the same {{ArrayBuffer}}, then throw a {{DataCloneError}} {{DOMException}}.
 3. For each |transferable| in |init|.{{AudioDataInit/transfer}}:
-     1. If {{platform object/[[Detached]]}} internal slot is `true`,
+     1. If |transferable|'s {{platform object/[[Detached]]}} internal slot is `true`,
          then throw a {{DataCloneError}} {{DOMException}}.
 4. Let |frame| be a new {{AudioData}} object, initialized as follows:
     1. Assign `false` to {{platform object/[[Detached]]}}.
@@ -3613,12 +3613,12 @@ dictionary VideoFrameMetadata {
     Layout and Allocation Size=] algorithm with |parsedRect|,
     |init|.{{VideoFrameBufferInit/format}}, and |optLayout|.
 10. If |combinedLayout| is an exception, throw |combinedLayout|.
-11. If `data.byteLength` is less than |combinedLayout|’s
+11. If `data.byteLength` is less than |combinedLayout|'s
     [=combined buffer layout/allocationSize=], throw a {{TypeError}}.
 12. If |init|.{{VideoFrameBufferInit/transfer}} contains more than one reference
      to the same {{ArrayBuffer}}, then throw a {{DataCloneError}} {{DOMException}}.
 13. For each |transferable| in |init|.{{VideoFrameBufferInit/transfer}}:
-     1. If {{platform object/[[Detached]]}} internal slot is `true`,
+     1. If |transferable|'s {{platform object/[[Detached]]}} internal slot is `true`,
          then throw a {{DataCloneError}} {{DOMException}}.
 14. If |init|.{{VideoFrameBufferInit/transfer}} contains an {{ArrayBuffer}}
     referenced by |data| the User Agent <em class="rfc2119">MAY</em> choose to:
@@ -3971,9 +3971,9 @@ A <dfn>computed plane layout</dfn> is a [=struct=] that consists of:
             and {{VideoFrame/[[visible height]]}} respectively.
         10. Assign |duration| and |timestamp| to {{VideoFrame/[[duration]]}} and
             {{VideoFrame/[[timestamp]]}} respectively.
-        11. Assign {{VideoFrame/[[color space]]}} with the result of running the
-            [=VideoFrame/Pick Color Space=] algorithm, with |colorSpace| and
-            {{VideoFrame/[[format]]}}.
+        11. Assign the result of running the [=VideoFrame/Pick Color Space=]
+            algorithm, with |colorSpace| and {{VideoFrame/[[format]]}}, to
+            {{VideoFrame/[[color space]]}}.
         12. Assign {{VideoFrame/rotation}} and {{VideoFrame/flip}} to |rotation|
             and |flip| respectively.
     2. Return |frame|.
@@ -4356,9 +4356,9 @@ A <dfn>computed plane layout</dfn> is a [=struct=] that consists of:
 : <dfn>Convert PredefinedColorSpace to VideoColorSpace</dfn> (with |colorSpace|)
  :: 1. Assert: |colorSpace| is equal to one of {{srgb}} or {{display-p3}}.
     2. If |colorSpace| is equal to {{srgb}} return a new instance of the
-        [=sRGB Color Space=]
+        [=sRGB Color Space=].
     3. If |colorSpace| is equal to {{display-p3}} return a new instance of the
-        [=Display P3 Color Space=]
+        [=Display P3 Color Space=].
 
 : <dfn for=VideoFrame>Convert to RGB frame</dfn> (with |frame|, |format| and |colorSpace|)
  :: 1. This algorithm <em class="rfc2119">MUST</em> be called only if |format|
@@ -5436,7 +5436,7 @@ interface ImageDecoder {
     2. If |init|.{{ImageDecoderInit/transfer}} contains more than one reference
         to the same {{ArrayBuffer}}, then throw a {{DataCloneError}} {{DOMException}}.
     3. For each |transferable| in |init|.{{ImageDecoderInit/transfer}}:
-        1. If {{platform object/[[Detached]]}} internal slot is `true`,
+        1. If |transferable|'s {{platform object/[[Detached]]}} internal slot is `true`,
             then throw a {{DataCloneError}} {{DOMException}}.
     4. Let |d| be a new {{ImageDecoder}} object. In the steps below, all
         mentions of {{ImageDecoder}} members apply to |d| unless stated
