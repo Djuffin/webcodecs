@@ -116,6 +116,17 @@ Definitions {#definitions}
 :: Refers generically to an instance of {{AudioDecoder}}, {{AudioEncoder}},
     {{VideoDecoder}}, or {{VideoEncoder}}.
 
+: <dfn lt="presentation timestamp|timestamp">presentation timestamp</dfn>
+:: The presentation timestamp (PTS) of a media sample, which determines its
+    relative ordering and timing for rendering and processing. It is expressed
+    in microseconds. The specific epoch (e.g., zero-based from the start of a
+    capture, or matching a system clock) is not defined by this specification,
+    but timestamps <em class="rfc2119">SHOULD</em> be consistent within a single
+    stream.
+
+: <dfn>presentation duration</dfn>
+:: The duration of a media sample, expressed in microseconds.
+
 : <dfn lt="Key Chunk|Key Frame">Key Chunk</dfn>
 :: An encoded chunk that does not depend on any other frames for decoding. Also
     commonly referred to as a "key frame".
@@ -2587,9 +2598,9 @@ enum EncodedAudioChunkType {
 : <dfn attribute for=EncodedAudioChunk>\[[type]]</dfn>
 :: Describes whether the chunk is a [=key chunk=].
 : <dfn attribute for=EncodedAudioChunk>\[[timestamp]]</dfn>
-:: The presentation timestamp, given in microseconds.
+:: The [=presentation timestamp=] of this {{EncodedAudioChunk}}.
 : <dfn attribute for=EncodedAudioChunk>\[[duration]]</dfn>
-:: The presentation duration, given in microseconds.
+:: The [=presentation duration=] of this {{EncodedAudioChunk}}.
 : <dfn attribute for=EncodedAudioChunk>[[byte length]]</dfn>
 :: The byte length of {{EncodedAudioChunk/[[internal data]]}}.
 
@@ -2626,10 +2637,10 @@ enum EncodedAudioChunkType {
 :: Returns the value of {{EncodedAudioChunk/[[type]]}}.
 
 : <dfn attribute for=EncodedAudioChunk>timestamp</dfn>
-:: Returns the value of {{EncodedAudioChunk/[[timestamp]]}}.
+:: Returns the [=presentation timestamp=] of this {{EncodedAudioChunk}}.
 
 : <dfn attribute for=EncodedAudioChunk>duration</dfn>
-:: Returns the value of {{EncodedAudioChunk/[[duration]]}}.
+:: Returns the [=presentation duration=] of this {{EncodedAudioChunk}}.
 
 : <dfn attribute for=EncodedAudioChunk>byteLength</dfn>
 :: Returns the value of {{EncodedAudioChunk/[[byte length]]}}.
@@ -2693,9 +2704,9 @@ enum EncodedVideoChunkType {
 : <dfn attribute for=EncodedVideoChunk>\[[type]]</dfn>
 :: The {{EncodedVideoChunkType}} of this {{EncodedVideoChunk}};
 : <dfn attribute for=EncodedVideoChunk>\[[timestamp]]</dfn>
-:: The presentation timestamp, given in microseconds.
+:: The [=presentation timestamp=] of this {{EncodedVideoChunk}}.
 : <dfn attribute for=EncodedVideoChunk>\[[duration]]</dfn>
-:: The presentation duration, given in microseconds.
+:: The [=presentation duration=] of this {{EncodedVideoChunk}}.
 : <dfn attribute for=EncodedVideoChunk>[[byte length]]</dfn>
 :: The byte length of {{EncodedVideoChunk/[[internal data]]}}.
 
@@ -2733,10 +2744,10 @@ enum EncodedVideoChunkType {
 :: Returns the value of {{EncodedVideoChunk/[[type]]}}.
 
 : <dfn attribute for=EncodedVideoChunk>timestamp</dfn>
-:: Returns the value of {{EncodedVideoChunk/[[timestamp]]}}.
+:: Returns the [=presentation timestamp=] of this {{EncodedVideoChunk}}.
 
 : <dfn attribute for=EncodedVideoChunk>duration</dfn>
-:: Returns the value of {{EncodedVideoChunk/[[duration]]}}.
+:: Returns the [=presentation duration=] of this {{EncodedVideoChunk}}.
 
 : <dfn attribute for=EncodedVideoChunk>byteLength</dfn>
 :: Returns the value of {{EncodedVideoChunk/[[byte length]]}}.
@@ -2887,7 +2898,7 @@ dictionary AudioDataInit {
 :: The number of audio channels for this {{AudioData}}.
 
 : <dfn attribute for=AudioData>\[[timestamp]]</dfn>
-:: The presentation timestamp, in microseconds, for this {{AudioData}}.
+:: The [=presentation timestamp=] of this {{AudioData}}.
 
 ### Constructors ###{#audiodata-constructors}
 <dfn constructor for=AudioData title="AudioData(init)">
@@ -2955,13 +2966,13 @@ dictionary AudioDataInit {
     {{AudioData/[[number of channels]]}}.
 
 : <dfn attribute for=AudioData>timestamp</dfn>
-:: The presentation timestamp, in microseconds, for this {{AudioData}}.
+:: Returns the [=presentation timestamp=] of this {{AudioData}}.
 
-    The {{AudioData/numberOfChannels}} getter steps are to return
+    The {{AudioData/timestamp}} getter steps are to return
     {{AudioData/[[timestamp]]}}.
 
 : <dfn attribute for=AudioData>duration</dfn>
-:: The duration, in microseconds, for this {{AudioData}}.
+:: Returns the [=presentation duration=] of this {{AudioData}}.
 
     The {{AudioData/duration}} getter steps are to:
     1. Let |microsecondsPerSecond| be `1,000,000`.
@@ -3498,12 +3509,10 @@ dictionary VideoFrameMetadata {
     adjustments.
 
 : <dfn attribute for=VideoFrame>\[[duration]]</dfn>
-:: The presentation duration, given in microseconds. The duration is copied
-        from the {{EncodedVideoChunk}} corresponding to this {{VideoFrame}}.
+:: The [=presentation duration=] of this {{VideoFrame}}.
 
 : <dfn attribute for=VideoFrame>\[[timestamp]]</dfn>
-::  The presentation timestamp, given in microseconds. The timestamp is copied
-    from the {{EncodedVideoChunk}} corresponding to this {{VideoFrame}}.
+:: The [=presentation timestamp=] of this {{VideoFrame}}.
 
 : <dfn attribute for=VideoFrame>[[color space]]</dfn>
 :: The {{VideoColorSpace}} associated with this frame.
@@ -3790,17 +3799,13 @@ dictionary VideoFrameMetadata {
     {{VideoFrame/[[display height]]}}.
 
 : <dfn attribute for=VideoFrame>timestamp</dfn>
-:: The presentation timestamp, given in microseconds. For decode,
-    timestamp is copied from the {{EncodedVideoChunk}} corresponding
-    to this {{VideoFrame}}. For encode, timestamp is copied to the
-    {{EncodedVideoChunk}}s corresponding to this {{VideoFrame}}.
+:: Returns the [=presentation timestamp=] of this {{VideoFrame}}.
 
     The {{VideoFrame/timestamp}} getter steps are to return
     {{VideoFrame/[[timestamp]]}}.
 
 : <dfn attribute for=VideoFrame>duration</dfn>
-:: The presentation duration, given in microseconds. The duration is copied
-    from the {{EncodedVideoChunk}} corresponding to this VideoFrame.
+:: Returns the [=presentation duration=] of this {{VideoFrame}}.
 
     The {{VideoFrame/duration}} getter steps are to return
     {{VideoFrame/[[duration]]}}.
